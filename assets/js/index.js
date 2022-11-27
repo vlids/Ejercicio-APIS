@@ -16,48 +16,45 @@ async function getMonedas(montoUsuario, moneda){
     const data = await res.json();
     switch (moneda){
         case 'dolar':
-            totalMoneda.innerHTML = `$ ${(montoUsuario / parseFloat(data.dolar.valor)).toFixed(2)} ${data.dolar.codigo}`;
+            totalMoneda.innerHTML = `$ ${(montoUsuario / parseFloat(data.dolar.valor)).toFixed(2)} ${data.dolar.codigo}es`;
         break;
         case 'euro':
-            totalMoneda.innerHTML = `$ ${(montoUsuario / parseFloat(data.euro.valor)).toFixed(2)} ${data.euro.nombre}`;
+            totalMoneda.innerHTML = `$ ${(montoUsuario / parseFloat(data.euro.valor)).toFixed(2)} ${data.euro.nombre}s`;
         break;
         case 'bitcoin':
-            totalMoneda.innerHTML = `$ ${(montoUsuario / parseFloat(data.bitcoin.valor)).toFixed(2)} ${data.bitcoin.nombre}`;
+            totalMoneda.innerHTML = `$ ${(montoUsuario / parseFloat(data.bitcoin.valor)).toFixed(2)} ${data.bitcoin.nombre}s`;
         break;
     }
+
 }
+// Grafica
 
-// async function getChart(){
-//     const res = await fetch("https://mindicador.cl/api/");
-//     const datos = await res.json();
+let dias = data.serie.map((e) => e.fecha.slice(8, 10));
+console.log(dias);
 
-//     const labels = datos.map((dato) => {
-//         return dato.fecha;
-//     });
+let valores = data.serie.map((e) => e.valor);
+console.log(valores);
 
-//     const data = datos.map((dato) => {
-//         const monto = dato.valor;
-//     })
-//     const datasets =[
-//         {
-//             label : 'Monto',
-//             borderColor: 'rgb(255, 99, 132)',
-//             data
-//         }
-//     ];
-//     return {labels, datasets}
-// }
+var speedCanvas = document.getElementById("myChart");
 
-// async function renderGrafica(){
-//     const data = await getChart();
-//     const config = {
-//         type: 'line',
-//         data
-//     };
-//     const myChart = document.querySelector('#myChart');
-//     myChart.style.backgroundColor = #f3f3f3;
-//     new CharacterData(myChart, config);
-// }
 
-// renderGrafica()
+let speedData = {
+  labels: dias.slice(0, 10).reverse(),
+  datasets: [
+    {
+      data: valores.slice(0, 10).reverse(),
+      label: "Noviembre",
+      pointBackgroundColor: "rgb(75, 192, 192)",
+      fill: "rgb(75, 192, 192)",
+      borderColor: "rgb(75, 192, 192)"
+    }
+  ]
+};
+
+
+let lineChart = new Chart(speedCanvas, {
+  type: "line",
+  data: speedData
+});
+
 
